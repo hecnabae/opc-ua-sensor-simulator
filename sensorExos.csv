@@ -1,5 +1,5 @@
-﻿sensor_01,sensor_estados,sensor_produccion
-1,0,0
+﻿plc_01,sensor_estados_c1,sensor_produccion_c1,sensor_estados_c2,sensor_produccion_c2,sensor_estados_c3,sensor_produccion_c3
+1,0,0,0,0,0,0
 1,0,0
 1,0,0
 1,0,0

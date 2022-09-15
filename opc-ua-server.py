@@ -38,15 +38,15 @@ async def main():
     # var_pumpsetting = await obj_vplc.add_variable(idx, 'pumpsetting', 0, varianttype=VariantType.String)
     var_estado_c1 = await obj_vplc.add_variable(idx, 'estado_c1', 0, varianttype=VariantType.Boolean)
     var_produccion_c1 = await obj_vplc.add_variable(idx, 'produccion_c1', 0, varianttype=VariantType.Int64)
-    var_microparo_c1 = await obj_vplc.add_variable(idx, 'microparo_c1', 0, varianttype=VariantType.Boolean)
+    # var_microparo_c1 = await obj_vplc.add_variable(idx, 'microparo_c1', 0, varianttype=VariantType.Boolean)
 
     var_estado_c2 = await obj_vplc.add_variable(idx, 'estado_c2', 0, varianttype=VariantType.Boolean)
     var_produccion_c2 = await obj_vplc.add_variable(idx, 'produccion_c2', 0, varianttype=VariantType.Int64)
-    var_microparo_c2 = await obj_vplc.add_variable(idx, 'microparo_c2', 0, varianttype=VariantType.Boolean)
+    # var_microparo_c2 = await obj_vplc.add_variable(idx, 'microparo_c2', 0, varianttype=VariantType.Boolean)
 
     var_estado_c3 = await obj_vplc.add_variable(idx, 'estado_c3', 0, varianttype=VariantType.Boolean)
     var_produccion_c3 = await obj_vplc.add_variable(idx, 'produccion_c3', 0, varianttype=VariantType.Int64)
-    var_microparo_c3 = await obj_vplc.add_variable(idx, 'microparo_c3', 0, varianttype=VariantType.Boolean)
+    #var_microparo_c3 = await obj_vplc.add_variable(idx, 'microparo_c3', 0, varianttype=VariantType.Boolean)
 
     # Read Sensor Data from Kaggle
     df = pd.read_csv("sensorExos.csv")
@@ -54,9 +54,14 @@ async def main():
     print(df.columns)
 
     # Only use sensor data from 03 and 01 (preference)
-    sensor_data = pd.concat([df["sensor_estados_c1"], df["sensor_produccion_c1"], df["sensor_microparos_c1"],
-                             df["sensor_estados_c2"], df["sensor_produccion_c2"], df["sensor_microparos_c2"],
-                             df["sensor_estados_c3"], df["sensor_produccion_c3"], df["sensor_microparos_c3"],
+    # sensor_data = pd.concat([df["sensor_estados_c1"], df["sensor_produccion_c1"], df["sensor_microparos_c1"],
+    #                          df["sensor_estados_c2"], df["sensor_produccion_c2"], df["sensor_microparos_c2"],
+    #                          df["sensor_estados_c3"], df["sensor_produccion_c3"], df["sensor_microparos_c3"],
+    #                          ], axis=1)
+
+    sensor_data = pd.concat([df["sensor_estados_c1"], df["sensor_produccion_c1"],
+                             df["sensor_estados_c2"], df["sensor_produccion_c2"],
+                             df["sensor_estados_c3"], df["sensor_produccion_c3"]
                              ], axis=1)
 
     _logger.info('Starting server!')
@@ -78,22 +83,22 @@ async def main():
                 await var_estado_c1.write_value(estado_c1)
                 produccion_c1 = int(row[2])
                 await var_produccion_c1.write_value(produccion_c1)
-                microparo_c1 = int(row[3])
-                await var_microparo_c1.write_value(microparo_c1)
+                # microparo_c1 = int(row[3])
+                # await var_microparo_c1.write_value(microparo_c1)
 
-                estado_c2 = bool(int(row[4]))
+                estado_c2 = bool(int(row[3]))
                 await var_estado_c2.write_value(estado_c2)
-                produccion_c2 = int(row[5])
+                produccion_c2 = int(row[4])
                 await var_produccion_c2.write_value(produccion_c2)
-                microparo_c2 = int(row[6])
-                await var_microparo_c2.write_value(microparo_c2)
+                # microparo_c2 = int(row[6])
+                # await var_microparo_c2.write_value(microparo_c2)
 
-                estado_c3 = bool(int(row[7]))
+                estado_c3 = bool(int(row[5]))
                 await var_estado_c3.write_value(estado_c3)
-                produccion_c3 = int(row[8])
+                produccion_c3 = int(row[6])
                 await var_produccion_c3.write_value(produccion_c3)
-                microparo_c3 = int(row[9])
-                await var_microparo_c3.write_value(microparo_c3)
+                # microparo_c3 = int(row[9])
+                # await var_microparo_c3.write_value(microparo_c3)
 
 
                 await asyncio.sleep(6)
