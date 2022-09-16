@@ -46,7 +46,7 @@ async def main():
 
     var_estado_c3 = await obj_vplc.add_variable(idx, 'estado_c3', 0, varianttype=VariantType.Boolean)
     var_produccion_c3 = await obj_vplc.add_variable(idx, 'produccion_c3', 0, varianttype=VariantType.Int64)
-    #var_microparo_c3 = await obj_vplc.add_variable(idx, 'microparo_c3', 0, varianttype=VariantType.Boolean)
+    # var_microparo_c3 = await obj_vplc.add_variable(idx, 'microparo_c3', 0, varianttype=VariantType.Boolean)
 
     # Read Sensor Data from Kaggle
     df = pd.read_csv("sensorExos.csv")
@@ -54,15 +54,9 @@ async def main():
     print(df.columns)
 
     # Only use sensor data from 03 and 01 (preference)
-    # sensor_data = pd.concat([df["sensor_estados_c1"], df["sensor_produccion_c1"], df["sensor_microparos_c1"],
-    #                          df["sensor_estados_c2"], df["sensor_produccion_c2"], df["sensor_microparos_c2"],
-    #                          df["sensor_estados_c3"], df["sensor_produccion_c3"], df["sensor_microparos_c3"],
-    #                          ], axis=1)
-
     sensor_data = pd.concat([df["sensor_estados_c1"], df["sensor_produccion_c1"],
                              df["sensor_estados_c2"], df["sensor_produccion_c2"],
-                             df["sensor_estados_c3"], df["sensor_produccion_c3"]
-                             ], axis=1)
+                             df["sensor_estados_c3"], df["sensor_produccion_c3"]], axis=1)
 
     _logger.info('Starting server!')
     async with server:
@@ -101,7 +95,7 @@ async def main():
                 # await var_microparo_c3.write_value(microparo_c3)
 
 
-                await asyncio.sleep(6)
+                await asyncio.sleep(1)
 
 if __name__ == '__main__':
     # python 3.6 or lower
